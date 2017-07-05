@@ -1,0 +1,16 @@
+{
+  "name": "@signalk/signalk-plugin-sailtimermaps",
+  "version": "0.1.1",
+  "description": "Signal K server (https://github.com/signalk/signalk-server-node) plugin that reports wind data to SailTimerMaps.",
+  "main": "index.js",
+  "keywords": [
+    "signalk-node-server-plugin"
+  ],
+  "author": "Fabian Tollenaar <fabian@signalk.org>",
+  "repository": "https://github.com/SignalK/signalk-plugin-sailtimermaps",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "debug": "^2.2.0",
+    "isomorphic-fetch": "^2.2.1"
+  }
+}
