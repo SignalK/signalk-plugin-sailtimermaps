@@ -1,2 +1,3 @@
-# aisreporter
-Signal K Node server plugin to report the vessel's AIS data to MarineTraffic and other similar aggregators.
+# signalk-plugin-sailtimermaps
+
+Signal K server (https://github.com/signalk/signalk-server-node) plugin that reports wind data to SailTimerMaps.
