@@ -22,7 +22,7 @@ module.exports = function SailTimerMapsPlugin (app) {
   const plugin = {}
   let unsubscribe
 
-  plugin._onDelta = function sendDataToSailTimerMaps(username, password, data) {
+  plugin._send = function sendDataToSailTimerMaps(username, password, data) {
     // https://www.sailtimermaps.com/Edson/WS/SaveData/USERNAME/PASSWORD/DATA/
     // DATA = {0,-48.2365485,61.325668,11,32,5,181,3.5,200,2.1,2.5}
     // (int)ID of event,(double)latitude,(double)longitude,(int)accuracy,(int)sog,(int)cog,(int)awd,(double)aws,(int)twd,(double)tws,(double)tem
@@ -46,20 +46,24 @@ module.exports = function SailTimerMapsPlugin (app) {
     debug(`Started!`)
 
     unsubscribe = Bacon.combineWith(
-      (position, sog, cog, head) => {
+      (position, sog, cog, windApp, windTrue, windSpeed) => {
         debug('position', position)
         debug('SOG', convert(sog, 'm/s', 'kts'))
         debug('COG', convert(cog, 'rad', 'deg'))
-        debug('Heading', convert(head, 'rad', 'deg'))
-        debug('username', props.username)
-        debug('password', props.password)
+        debug('Wind Angle (apparent)', convert(windApp, 'rad', 'deg'))
+        debug('Wind Direction (true)', convert(windTrue, 'rad', 'deg'))
+        debug('Wind Speed (true)', convert(windSpeed, 'm/s', 'kts'))
+        debug('Username', props.username)
+        debug('Password', props.password)
         return
       }, 
       [
         'navigation.position', 
         'navigation.speedOverGround', 
         'navigation.courseOverGroundTrue', 
-        'navigation.headingTrue'
+        'environment.wind.angleApparent',
+        'environment.wind.directionTrue',
+        'environment.wind.speedTrue'
       ]
       .map(app.streambundle.getSelfStream, app.streambundle)
     )
